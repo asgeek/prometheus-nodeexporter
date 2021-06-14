@@ -78,10 +78,10 @@ fi
 
 if ! id -u $USERNAME > /dev/null 2>&1; then
     log "Create user group $GROUP and $USERNAME"
-    # Create new group ex: ifs-agent
+    # Create new group ex: mon-agent
     groupadd $GROUP 
 
-    # Create new user ex: ifs-agent
+    # Create new user ex: mon-agent
     useradd -m -g $GROUP $USERNAME 
 else
     log "User $USERNAME already exists"
@@ -97,7 +97,7 @@ fi
 
 cd $USER_HOME
 
-# create symlink “/usr/bin/node_exporter ” to node exporter home/ifs-agents/ node_exporter-{{ node_exporter_version }}.linux-amd64
+# create symlink “/usr/bin/node_exporter ” to node exporter home/mon-agents/ node_exporter-{{ node_exporter_version }}.linux-amd64
 if [[ -d node_exporter-$VERSION.linux-amd64 ]]; then
     log "Create symlink to node_exporter binary"
     ln -s $USER_HOME/node_exporter-$VERSION.linux-amd64 $NODE_EXPORTER_BIN
@@ -106,7 +106,7 @@ else
     false
 fi
 
-# grant access to node exporter executable to ifs-agent user
+# grant access to node exporter executable to mon-agent user
 log "Grant access to node exporter executable to $USERNAME user"
 chown $USERNAME:$GROUP $NODE_EXPORTER_BIN
 
